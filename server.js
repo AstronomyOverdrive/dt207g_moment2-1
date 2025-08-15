@@ -6,6 +6,7 @@ import "dotenv/config";
 
 // Start app
 const app = express();
+app.use(express.json());
 app.use(cors());
 
 // Connect to database
@@ -29,6 +30,17 @@ app.get("/resume", async (req, res) => {
 		const sql = "SELECT * FROM workexperience ORDER BY year";
 		const [rows, fields] = await connection.query(sql);
 		res.status(200).json(rows);
+	} catch (error) {
+		res.status(500).json({error: 'Internal error: ' + error});
+	}
+});
+// Delete an entry
+app.delete("/resume", async (req, res) => {
+	try {
+		const sql = "DELETE FROM workexperience WHERE id = ?";
+		const values = [req.body.id];
+		const [result, fields] = await connection.execute(sql, values);
+		res.status(200).json(result);
 	} catch (error) {
 		res.status(500).json({error: 'Internal error: ' + error});
 	}
