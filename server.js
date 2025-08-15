@@ -67,6 +67,29 @@ app.post("/resume", async (req, res) => {
 		res.status(400).json({error: 'Invalid request: ' + errorMsg});
 	}
 });
+// Update an entry
+app.put("/resume", async (req, res) => {
+	const updateEntry = {
+		id: req.body.id,
+		company: req.body.company,
+		title: req.body.title,
+		location: req.body.location,
+		year: req.body.year
+	}
+	const errorMsg = isRequestValid(updateEntry);
+	if (errorMsg === "") {
+		try {
+			const sql = "UPDATE workexperience SET companyname = ?, jobtitle = ?, location = ?, year = ? WHERE id = ?";
+			const values = [updateEntry.company, updateEntry.title, updateEntry.location, updateEntry.year, updateEntry.id];
+			const [result, fields] = await connection.execute(sql, values);
+			res.status(200).json(result);
+		} catch (error) {
+			res.status(500).json({error: 'Internal error: ' + error});
+		}
+	} else {
+		res.status(400).json({error: 'Invalid request: ' + errorMsg});
+	}
+});
 
 // Validate
 function isRequestValid(userInput) {
