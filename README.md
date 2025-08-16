@@ -35,9 +35,10 @@ After starting the server you can access the API at: [http://0.0.0.0:8000/resume
 |Create entry |POST   |/resume  |{"company": "Company Name", "title": "Work Title", "location": "City", "year": 2025} |
 |Update entry |PUT    |/resume  |{"id": 1, "company": "Company Name", "title": "Work Title", "location": "City", "year": 2025} |
 |Delete entry |DELETE |/resume  |{"id": 1} |
+
 *NOTE: year must be in range 1901-2155*
 ### GET response format
-```json
+```
 [
 	{
 		id: 1,
