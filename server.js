@@ -40,7 +40,7 @@ app.delete("/resume", async (req, res) => {
 		const sql = "DELETE FROM workexperience WHERE id = ?";
 		const values = [req.body.id];
 		const [result, fields] = await connection.execute(sql, values);
-		res.status(204).json(result);
+		res.status(200).json(result);
 	} catch (error) {
 		res.status(500).json({error: 'Internal error: ' + error});
 	}
